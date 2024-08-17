@@ -25,24 +25,28 @@ public:
 
     for (auto& [name, value] : colors_) {
       if (output.empty())
-		output = message.data();
+        output = message.data();
 
-      auto position = output.find(name + '{');
+      size_t position = 0;
 
-      if (position == string::npos)
-        continue;
+      while (position != std::string::npos) {
+        position = output.find(name + '{');
 
-      output.replace(position,
-                     name.size() + 1,
-                     std::format("\033[{}m", std::to_string(value)));
+        if (position == string::npos)
+          continue;
 
-      position = output.find('}');
+        output.replace(position,
+                       name.size() + 1,
+                       std::format("\033[{}m", std::to_string(value)));
 
-      if (position == string::npos)
-        continue;
+        position = output.find('}');
 
-      output.erase(position, 1);
-      output.insert(position, "\033[0m");
+        if (position == string::npos)
+          continue;
+
+        output.erase(position, 1);
+        output.insert(position, "\033[0m");
+      }
     }
 
     return output;
