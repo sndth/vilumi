@@ -24,9 +24,16 @@ class vivid
   using string = std::string_view;
 #endif
 
+  using color_pair = std::pair<std::string, std::uint8_t>;
   using unordered_color = std::unordered_map<std::string, std::uint8_t>;
 
 public:
+  static void insert(const color_pair& color)
+  {
+    // ...
+    colors_.emplace(color);
+  }
+
   static std::string colorize(const string message)
   {
     std::string output;
@@ -61,11 +68,10 @@ public:
   }
 
 private:
-  static inline unordered_color colors_ = { { "reset", 0 },    { "black", 30 },
-                                            { "red", 31 },     { "green", 32 },
-                                            { "yellow", 33 },  { "blue", 34 },
-                                            { "magenta", 35 }, { "cyan", 36 },
-                                            { "white", 37 } };
+  static inline unordered_color colors_ = {
+    { "reset", 0 },   { "black", 30 }, { "red", 31 },     { "green", 32 },
+    { "yellow", 33 }, { "blue", 34 },  { "magenta", 35 }, { "white", 37 }
+  };
 };
 }
 #endif
