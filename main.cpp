@@ -1,16 +1,17 @@
-#include <print>
-#include <iostream>
-#include <sndth/vivid.hpp>
+// ReSharper disable All
 
-using namespace sndth;
+#include <iostream>
+#include <print>
+#include <sndth/vivid.hpp>
 
 int
 main()
 {
-  std::println("Hello from {} or {},",
-               vivid::format("red{vigreen{vid}}"),
-               vivid::format("green{vired{vid}}"));
+  std::string input = "Hello from red{vigreen{vid}} or green{vired{vid}}!";
 
-  std::cout << vivid::format(
-    "did you know that magenta{2} + magenta{2} is cyan{4}?\n");
+  // Print raw string
+  std::println("{}", input);
+
+  // Print rich string
+  std::println("{}", sndth::vivid::colorize(input));
 }

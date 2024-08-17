@@ -1,3 +1,11 @@
+//        _       _     _
+// __   _(_)_   _(_) __| |
+// \ \ / / \ \ / / |/ _` |
+//  \ V /| |\ V /| | (_| |
+//   \_/ |_| \_/ |_|\__,_|
+// https://github.com/sndth/vivid
+// A fast and simple text color parser
+
 #pragma once
 
 #ifndef VIVID_HPP
@@ -19,7 +27,7 @@ class vivid
   using unordered_color = std::unordered_map<std::string, std::uint8_t>;
 
 public:
-  static std::string format(const string message)
+  static std::string colorize(const string message)
   {
     std::string output;
 
