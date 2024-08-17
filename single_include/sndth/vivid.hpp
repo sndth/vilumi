@@ -53,11 +53,11 @@ public:
   }
 
 private:
-  static inline unordered_color colors_ = {
-    // ...
-    { "red", 31 },
-    { "green", 32 }
-  };
+  static inline unordered_color colors_ = { { "reset", 0 },    { "black", 30 },
+                                            { "red", 31 },     { "green", 32 },
+                                            { "yellow", 33 },  { "blue", 34 },
+                                            { "magenta", 35 }, { "cyan", 36 },
+                                            { "white", 37 } };
 };
 }
 #endif
