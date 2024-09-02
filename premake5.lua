@@ -1,4 +1,4 @@
-workspace "vivid"
+workspace "test_vivid"
   location "build"
   cppdialect "C++latest"
   architecture "x86_64"
@@ -8,14 +8,14 @@ workspace "vivid"
     "Release"
   }
 
-  project "vivid"
+  project "test_vivid"
     kind "ConsoleApp"
 
     files {
-      "single_include/sndth/vivid.hpp",
-      "main.cpp"
+      "sources/test.cpp",
+      "sources/sndth/vivid.hpp"
     } includedirs {
-      "single_include"
+      "sources"
     }
 
     filter "configurations:Debug"
