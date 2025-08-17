@@ -28,42 +28,42 @@ public:
   template<typename... Arguments>
   static std::string colorize(std::string message, Arguments&&... arguments)
   {
-    colourize(message, arguments);
+    return colourize(std::move(message), std::forward<Arguments>(arguments)...);
   }
 
   template<typename... Arguments>
   static std::string colourize(std::string message, Arguments&&... arguments)
   {
+    std::size_t index = 0;
+    std::size_t position = 0;
     std::vector<std::string> values{ to_own_string(
       std::forward<Arguments>(arguments))... };
-    size_t pos = 0;
-    size_t index = 0;
 
-    while ((pos = message.find("{}", pos)) != std::string::npos &&
+    while ((position = message.find("{}", position)) != std::string::npos &&
            index < values.size()) {
       message.replace(pos, 2, values[index++]);
-      pos += values[index - 1].size();
+      position += values[index - 1].size();
     }
 
-    for (auto& [name, value] : colors_) {
-      auto find = name + '(';
-      auto replace "\033[" + std::to_string(value) + "m";
-      auto open_position = message.find(find);
+    for (const auto& [name, code] : colors_) {
+      std::size_t pos_open = 0;
+      std::string tag_open = name + "(";
+      std::string code_ansi = "\033[" + std::to_string(code) + "m";
 
-      while (open_position != std::string::npos) {
-        message.replace(open_position, find.length(), replace);
+      while ((pos_open = message.find(tag_open, pos_open)) !=
+             std::string::npos) {
+        message.replace(pos_open, tag_open.length(), code_ansi);
 
-        auto const close_position =
-          message.find(')', open_position + replace.length());
+        std::size_t pos_close =
+          message.find(')', pos_open + code_ansi.length());
 
-        if (close_position == std::string::npos) {
-          throw std::exception(
-            "Opened bracket but not closed at " + open_position + name.length())
-              .c_str());
+        if (pos_close == std::string::npos) {
+          throw std::runtime_error("Opened bracket for color '" + name +
+                                   "' but not closed.");
         }
 
-        message.replace(close_position, 1, "\033[0m");
-        open_position = message.find(find, close_position + 1);
+        message.replace(pos_close, 1, "\033[0m");
+        pos_open = pos_close + 4;
       }
     }
 
