@@ -41,7 +41,7 @@ public:
 
     while ((position = message.find("{}", position)) != std::string::npos &&
            index < values.size()) {
-      message.replace(pos, 2, values[index++]);
+      message.replace(position, 2, values[index++]);
       position += values[index - 1].size();
     }
 
