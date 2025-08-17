@@ -11,12 +11,13 @@
 
 #include <format>
 #include <string>
+#include <utility>
 #include <unordered_map>
 
 class vilumi final
 {
   template<typename T>
-  static std::string to_string_any(const T& value)
+  static std::string to_own_string(const T& value)
   {
     std::ostringstream res;
     res << value;
@@ -24,11 +25,17 @@ class vilumi final
   }
 
 public:
-  template<typename... Args>
-  static std::string color(std::string message, Args&&... args)
+  template<typename... Arguments>
+  static std::string colorize(std::string message, Arguments&&... arguments)
   {
-    std::vector<std::string> values{ to_string_any(
-      std::forward<Args>(args))... };
+    colourize(message, arguments);
+  }
+
+  template<typename... Arguments>
+  static std::string colourize(std::string message, Arguments&&... arguments)
+  {
+    std::vector<std::string> values{ to_own_string(
+      std::forward<Arguments>(arguments))... };
     size_t pos = 0;
     size_t index = 0;
 
