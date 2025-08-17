@@ -47,7 +47,7 @@ public:
 
     for (auto& [name, value] : colors_) {
       auto find = name + '(';
-      auto replace = std::format("\033[{}m", std::to_string(value));
+      auto replace "\033[" + std::to_string(value) + "m";
       auto open_position = message.find(find);
 
       while (open_position != std::string::npos) {
@@ -58,8 +58,7 @@ public:
 
         if (close_position == std::string::npos) {
           throw std::exception(
-            std::format("Opened bracket but not closed at {}",
-                        (open_position + name.length()))
+            "Opened bracket but not closed at " + (open_position + name.length()))
               .c_str());
         }
 
