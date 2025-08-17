@@ -58,7 +58,7 @@ public:
 
         if (close_position == std::string::npos) {
           throw std::exception(
-            "Opened bracket but not closed at " + (open_position + name.length()))
+            "Opened bracket but not closed at " + open_position + name.length())
               .c_str());
         }
 
